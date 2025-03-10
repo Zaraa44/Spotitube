@@ -1,8 +1,8 @@
-package nl.han.oose.dea.services;
+package nl.han.oose.dea.rest.services;
 
-import nl.han.oose.dea.services.dto.ItemDTO;
-import nl.han.oose.dea.services.exceptions.IdAlreadyInUseException;
-import nl.han.oose.dea.services.exceptions.ItemNotAvailableException;
+import nl.han.oose.dea.rest.services.dto.ItemDTO;
+import nl.han.oose.dea.rest.services.exceptions.IdAlreadyInUseException;
+import nl.han.oose.dea.rest.services.exceptions.ItemNotAvailableException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,10 @@ public class ItemService {
      *
      * @return The full {@link List} of {@link ItemDTO} instances.
      */
+
+    public List<ItemDTO> getFirstTwoItems() {
+        return items.stream().limit(2).collect(Collectors.toList());
+    }
     public List<ItemDTO> getAll() {
         return items;
     }
