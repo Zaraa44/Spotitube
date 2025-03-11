@@ -7,7 +7,7 @@ import nl.han.oose.dea.rest.services.dto.Login.LoginRequestDTO;
 import nl.han.oose.dea.rest.services.dto.Login.LoginResponseDTO;
 
 @Path("/login")
-public class InlogResource {
+public class LoginResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
