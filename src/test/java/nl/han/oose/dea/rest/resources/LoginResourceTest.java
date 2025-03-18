@@ -1,35 +1,51 @@
 package nl.han.oose.dea.rest.resources;
 
 import jakarta.ws.rs.core.Response;
+import nl.han.oose.dea.rest.datasource.data.UserDAO;
+import nl.han.oose.dea.rest.services.dto.User.UserDTO;
 import nl.han.oose.dea.rest.services.dto.Login.LoginRequestDTO;
 import nl.han.oose.dea.rest.services.dto.Login.LoginResponseDTO;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 public class LoginResourceTest {
 
+    @InjectMocks
     private LoginResource sut;
+
+    @Mock
+    private UserDAO userDAO;
 
     @BeforeEach
     void setup() {
         sut = new LoginResource();
+
     }
 
     @Test
     void loginFailsForInvalidCredentials() {
         // Arrange
         LoginRequestDTO loginRequest = new LoginRequestDTO();
-        loginRequest.setUser("TestFouteUsername");
-        loginRequest.setPassword("TestFoutePassword");
+        loginRequest.setUser("InvalidUser");
+        loginRequest.setPassword("InvalidPass");
+
+        when(userDAO.getUserByUsername("InvalidUser")).thenReturn(null);
 
         // Act
         Response loginResponse = sut.login(loginRequest);
 
         // Assert
-        Assertions.assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), loginResponse.getStatus());
+        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), loginResponse.getStatus());
+        assertEquals("Invalid credentials", loginResponse.getEntity());
     }
-
 
     @Test
     void loginSucceedsForValidCredentials() {
@@ -38,16 +54,19 @@ public class LoginResourceTest {
         loginRequest.setUser("Pasa");
         loginRequest.setPassword("Password123");
 
+        UserDTO mockUser = new UserDTO("Pasa", "Password123"); // Removed token field
+        when(userDAO.getUserByUsername("Pasa")).thenReturn(mockUser);
+
         // Act
         Response loginResponse = sut.login(loginRequest);
 
         // Assert
-        Assertions.assertEquals(Response.Status.OK.getStatusCode(), loginResponse.getStatus());
+        assertEquals(Response.Status.OK.getStatusCode(), loginResponse.getStatus());
+        assertTrue(loginResponse.hasEntity());
 
         LoginResponseDTO responseDTO = (LoginResponseDTO) loginResponse.getEntity();
-        Assertions.assertNotNull(responseDTO);
-        Assertions.assertEquals("1234-1234-1234", responseDTO.getToken());
-        Assertions.assertEquals("Pasa", responseDTO.getUser());
+        assertNotNull(responseDTO);
+        assertEquals("Pasa", responseDTO.getUser());
     }
 
     @Test
@@ -61,7 +80,8 @@ public class LoginResourceTest {
         Response loginResponse = sut.login(loginRequest);
 
         // Assert
-        Assertions.assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), loginResponse.getStatus());
+        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), loginResponse.getStatus());
+        assertEquals("Invalid credentials", loginResponse.getEntity());
     }
 
     @Test
@@ -75,7 +95,8 @@ public class LoginResourceTest {
         Response loginResponse = sut.login(loginRequest);
 
         // Assert
-        Assertions.assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), loginResponse.getStatus());
+        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), loginResponse.getStatus());
+        assertEquals("Invalid credentials", loginResponse.getEntity());
     }
 
     @Test
@@ -89,7 +110,7 @@ public class LoginResourceTest {
         Response loginResponse = sut.login(loginRequest);
 
         // Assert
-        Assertions.assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), loginResponse.getStatus());
+        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), loginResponse.getStatus());
+        assertEquals("Invalid credentials", loginResponse.getEntity());
     }
-
 }

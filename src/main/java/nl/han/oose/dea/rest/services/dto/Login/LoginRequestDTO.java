@@ -1,6 +1,5 @@
 package nl.han.oose.dea.rest.services.dto.Login;
 
-
 public class LoginRequestDTO {
     private String user;
     private String password;

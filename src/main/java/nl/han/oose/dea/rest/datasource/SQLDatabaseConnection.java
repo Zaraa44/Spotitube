@@ -13,10 +13,10 @@ public class SQLDatabaseConnection {
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             if (connection != null) {
-                System.out.println("Connected to SQL Server successfully!");
+                System.out.println("Connectie gelukt");
             }
         } catch (SQLException e) {
-            System.err.println("Connection failed: " + e.getMessage());
+            System.err.println("Connectie foutje: " + e.getMessage());
         }
     }
 }
