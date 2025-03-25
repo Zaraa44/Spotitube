@@ -1,5 +1,6 @@
 package nl.han.oose.dea.rest.services.dto.Playlist;
 
+
 import java.util.List;
 
 public class PlaylistResponseDTO {
@@ -11,19 +12,6 @@ public class PlaylistResponseDTO {
         this.length = length;
     }
 
-    public List<PlaylistDTO> getPlaylists() {
-        return playlists;
-    }
-
-    public void setPlaylists(List<PlaylistDTO> playlists) {
-        this.playlists = playlists;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
+    public List<PlaylistDTO> getPlaylists() { return playlists; }
+    public int getLength() { return length; }
 }

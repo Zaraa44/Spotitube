@@ -109,6 +109,8 @@ go
 create table PLAYLISTTRACKS (
    ID                   int                  not null,
    TRACK_ID             int                  not null,
+   OFFLINEAVAILABLE     bit                  not null
+
    constraint PK_PLAYLISTTRACKS primary key (ID, TRACK_ID)
 )
 go

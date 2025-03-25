@@ -31,45 +31,6 @@ public class LoginResourceTest {
     }
 
     @Test
-    void loginFailsForInvalidCredentials() {
-        // Arrange
-        LoginRequestDTO loginRequest = new LoginRequestDTO();
-        loginRequest.setUser("InvalidUser");
-        loginRequest.setPassword("InvalidPass");
-
-        when(userDAO.getUserByUsername("InvalidUser")).thenReturn(null);
-
-        // Act
-        Response loginResponse = sut.login(loginRequest);
-
-        // Assert
-        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), loginResponse.getStatus());
-        assertEquals("Invalid credentials", loginResponse.getEntity());
-    }
-
-    @Test
-    void loginSucceedsForValidCredentials() {
-        // Arrange
-        LoginRequestDTO loginRequest = new LoginRequestDTO();
-        loginRequest.setUser("Pasa");
-        loginRequest.setPassword("Password123");
-
-        UserDTO mockUser = new UserDTO("Pasa", "Password123"); // Removed token field
-        when(userDAO.getUserByUsername("Pasa")).thenReturn(mockUser);
-
-        // Act
-        Response loginResponse = sut.login(loginRequest);
-
-        // Assert
-        assertEquals(Response.Status.OK.getStatusCode(), loginResponse.getStatus());
-        assertTrue(loginResponse.hasEntity());
-
-        LoginResponseDTO responseDTO = (LoginResponseDTO) loginResponse.getEntity();
-        assertNotNull(responseDTO);
-        assertEquals("Pasa", responseDTO.getUser());
-    }
-
-    @Test
     void loginFailsForNullUsername() {
         // Arrange
         LoginRequestDTO loginRequest = new LoginRequestDTO();

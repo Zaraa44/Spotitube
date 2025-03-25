@@ -1,4 +1,4 @@
-package nl.han.oose.dea.rest;
+package nl.han.oose.dea.rest.resources;
 
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;
@@ -17,4 +17,6 @@ public class CORSFilter implements ContainerResponseFilter {
         cres.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
         cres.getHeaders().add("Access-Control-Max-Age", "1209600");
     }
+
+
 }
