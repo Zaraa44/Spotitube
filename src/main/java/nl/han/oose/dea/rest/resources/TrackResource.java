@@ -3,9 +3,9 @@ package nl.han.oose.dea.rest.resources;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import nl.han.oose.dea.rest.datasource.data.TrackDAO;
-import nl.han.oose.dea.rest.datasource.data.UserDAO;
-import nl.han.oose.dea.rest.datasource.data.PlaylistDAO;
+import nl.han.oose.dea.rest.datasource.DAO.TrackDAO;
+import nl.han.oose.dea.rest.datasource.DAO.UserDAO;
+import nl.han.oose.dea.rest.datasource.DAO.PlaylistDAO;
 import nl.han.oose.dea.rest.services.dto.Track.TracksResponseDTO;
 import nl.han.oose.dea.rest.services.dto.Track.TrackDTO;
 
@@ -19,6 +19,11 @@ public class TrackResource {
 
     private TrackDAO trackDAO = new TrackDAO();
     private UserDAO userDAO = new UserDAO();
+
+    public TrackResource(TrackDAO trackDAO, UserDAO userDAO) {
+        this.trackDAO = trackDAO;
+        this.userDAO = userDAO;
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

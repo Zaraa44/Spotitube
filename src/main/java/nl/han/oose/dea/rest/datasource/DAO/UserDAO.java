@@ -1,12 +1,15 @@
-package nl.han.oose.dea.rest.datasource.data;
+package nl.han.oose.dea.rest.datasource.DAO;
 
+import nl.han.oose.dea.rest.datasource.mappers.UserDAOMapper;
 import nl.han.oose.dea.rest.services.dto.User.UserDTO;
+
 import java.sql.*;
 
 public class UserDAO {
-    private String dbUrl = "jdbc:sqlserver://localhost:1433;databaseName=Spotitube";
-    private String dbUser = "nisa";
-    private String dbPassword = "Naelbdp123!";
+    private final String dbUrl = "jdbc:sqlserver://localhost:1433;databaseName=Spotitube";
+    private final String dbUser = "nisa";
+    private final String dbPassword = "Naelbdp123!";
+    private final UserDAOMapper mapper = new UserDAOMapper();
 
     public UserDTO getUserByUsername(String username) {
         String sql = "SELECT USERNAME, PASSWORD FROM USERS WHERE USERNAME = ?";
@@ -18,7 +21,7 @@ public class UserDAO {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                return new UserDTO(rs.getString("USERNAME"), rs.getString("PASSWORD"));
+                return mapper.mapToUserDTO(rs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
