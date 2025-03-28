@@ -1,5 +1,6 @@
 package nl.han.oose.dea.rest.resources;
 
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -11,14 +12,19 @@ import nl.han.oose.dea.rest.services.dto.Track.TrackDTO;
 
 import java.util.List;
 
-
 @Path("/tracks")
 public class TrackResource {
 
-    private PlaylistDAO playlistDAO = new PlaylistDAO();
+    @Inject
+    private PlaylistDAO playlistDAO;
 
-    private TrackDAO trackDAO = new TrackDAO();
-    private UserDAO userDAO = new UserDAO();
+    @Inject
+    private TrackDAO trackDAO;
+
+    @Inject
+    private UserDAO userDAO;
+
+    public TrackResource() {}
 
     public TrackResource(TrackDAO trackDAO, UserDAO userDAO) {
         this.trackDAO = trackDAO;
@@ -40,4 +46,3 @@ public class TrackResource {
         return Response.ok(new TracksResponseDTO(tracks)).build();
     }
 }
-

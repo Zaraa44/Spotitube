@@ -1,5 +1,6 @@
 package nl.han.oose.dea.rest.datasource.mappers;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import nl.han.oose.dea.rest.services.dto.Track.TrackDTO;
 
 import java.sql.ResultSet;
@@ -7,7 +8,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+@ApplicationScoped
 public class TrackDAOMapper {
+
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 
     public TrackDTO mapToTrackDTO(ResultSet rs) throws SQLException {

@@ -1,26 +1,32 @@
 package nl.han.oose.dea.rest.datasource.DAO;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import nl.han.oose.dea.rest.datasource.mappers.PlaylistDAOMapper;
+import nl.han.oose.dea.rest.datasource.mappers.UserDAOMapper;
 import nl.han.oose.dea.rest.services.dto.Playlist.PlaylistDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@ApplicationScoped
 public class PlaylistDAO {
+
+    private PlaylistDAOMapper mapper;
+
+    @Inject
+    public void setMapper(PlaylistDAOMapper mapper) {
+        this.mapper = mapper;
+    }
+
+    public PlaylistDAO() {
+    }
+
     private final String dbUrl = "jdbc:sqlserver://localhost:1433;databaseName=Spotitube";
     private final String dbUser = "nisa";
     private final String dbPassword = "Naelbdp123!";
-
-    private final PlaylistDAOMapper mapper;
-
-    public PlaylistDAO() {
-        this.mapper = new PlaylistDAOMapper();
-    }
-
-    public PlaylistDAO(PlaylistDAOMapper mapper) {
-        this.mapper = mapper;
-    }
 
     public List<PlaylistDTO> getAllPlaylists(String requestingUser) {
         List<PlaylistDTO> playlists = new ArrayList<>();

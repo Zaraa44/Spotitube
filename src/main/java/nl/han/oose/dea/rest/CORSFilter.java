@@ -1,3 +1,5 @@
+package nl.han.oose.dea.rest;
+
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;

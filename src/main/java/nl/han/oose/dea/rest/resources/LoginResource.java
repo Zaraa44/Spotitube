@@ -1,5 +1,6 @@
 package nl.han.oose.dea.rest.resources;
 
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -15,8 +16,11 @@ import java.util.UUID;
 @Path("/login")
 public class LoginResource {
 
-    private UserDAO userDAO = new UserDAO();
-    private PlaylistDAO playlistDAO = new PlaylistDAO();
+    @Inject
+    private UserDAO userDAO;
+
+    @Inject
+    private PlaylistDAO playlistDAO;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -28,10 +32,8 @@ public class LoginResource {
             return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid credentials").build();
         }
 
-
         String newToken = UUID.randomUUID().toString();
         userDAO.updateUserToken(userFromDb.getUser(), newToken);
-
 
         playlistDAO.updateOwnerColumnForUser(userFromDb.getUser());
 

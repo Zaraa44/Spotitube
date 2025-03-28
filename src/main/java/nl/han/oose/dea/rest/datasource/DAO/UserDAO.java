@@ -1,15 +1,28 @@
 package nl.han.oose.dea.rest.datasource.DAO;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import nl.han.oose.dea.rest.datasource.mappers.UserDAOMapper;
 import nl.han.oose.dea.rest.services.dto.User.UserDTO;
 
 import java.sql.*;
 
+@ApplicationScoped
 public class UserDAO {
+
     private final String dbUrl = "jdbc:sqlserver://localhost:1433;databaseName=Spotitube";
     private final String dbUser = "nisa";
     private final String dbPassword = "Naelbdp123!";
-    private final UserDAOMapper mapper = new UserDAOMapper();
+
+    private UserDAOMapper mapper;
+
+    public UserDAO() {
+    }
+
+    @Inject
+    public void setMapper(UserDAOMapper mapper) {
+        this.mapper = mapper;
+    }
 
     public UserDTO getUserByUsername(String username) {
         String sql = "SELECT USERNAME, PASSWORD FROM USERS WHERE USERNAME = ?";

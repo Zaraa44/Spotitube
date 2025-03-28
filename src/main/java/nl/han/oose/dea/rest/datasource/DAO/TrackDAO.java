@@ -1,5 +1,7 @@
 package nl.han.oose.dea.rest.datasource.DAO;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import nl.han.oose.dea.rest.datasource.mappers.TrackDAOMapper;
 import nl.han.oose.dea.rest.services.dto.Track.TrackDTO;
 import nl.han.oose.dea.rest.services.exceptions.Track.TrackNotFoundException;
@@ -8,11 +10,22 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@ApplicationScoped
 public class TrackDAO {
+
     private final String dbUrl = "jdbc:sqlserver://localhost:1433;databaseName=Spotitube";
     private final String dbUser = "nisa";
     private final String dbPassword = "Naelbdp123!";
-    private final TrackDAOMapper mapper = new TrackDAOMapper();
+
+    private TrackDAOMapper mapper;
+
+    public TrackDAO() {
+    }
+
+    @Inject
+    public void setMapper(TrackDAOMapper mapper) {
+        this.mapper = mapper;
+    }
 
     public List<TrackDTO> getTracksForPlaylist(int playlistId) {
         String sql = "SELECT * FROM TRACKS T JOIN PLAYLISTTRACKS PT ON T.TRACK_ID = PT.TRACK_ID WHERE PT.ID = ?";

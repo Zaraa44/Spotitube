@@ -1,10 +1,12 @@
 package nl.han.oose.dea.rest.datasource.mappers;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import nl.han.oose.dea.rest.services.dto.User.UserDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@ApplicationScoped
 public class UserDAOMapper {
     public UserDTO mapToUserDTO(ResultSet rs) throws SQLException {
         return new UserDTO(

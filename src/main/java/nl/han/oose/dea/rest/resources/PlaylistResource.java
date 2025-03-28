@@ -1,5 +1,6 @@
 package nl.han.oose.dea.rest.resources;
 
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -14,6 +15,7 @@ import nl.han.oose.dea.rest.services.exceptions.Playlist.UnauthorizedPlaylistAcc
 import nl.han.oose.dea.rest.services.exceptions.Token.InvalidTokenException;
 
 import java.util.List;
+
 @Path("/playlists")
 public class PlaylistResource {
 
@@ -21,15 +23,14 @@ public class PlaylistResource {
     private UserDAO userDAO;
     private TrackDAO trackDAO;
 
-    public PlaylistResource() {
-        this(new PlaylistDAO(), new UserDAO(), new TrackDAO());
-    }
-
+    @Inject
     public PlaylistResource(PlaylistDAO playlistDAO, UserDAO userDAO, TrackDAO trackDAO) {
         this.playlistDAO = playlistDAO;
         this.userDAO = userDAO;
         this.trackDAO = trackDAO;
     }
+
+    public PlaylistResource() {}
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -163,4 +164,3 @@ public class PlaylistResource {
         return Response.ok(new TracksResponseDTO(updatedTracks)).build();
     }
 }
-
