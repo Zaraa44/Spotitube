@@ -1,6 +1,6 @@
 package nl.han.oose.dea.rest.resources.exceptionsTests;
 
-import nl.han.oose.dea.rest.services.exceptions.Track.TrackNotFoundException;
+import nl.han.oose.dea.rest.services.exceptions.TrackNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,6 +1,6 @@
 package nl.han.oose.dea.rest.resources.exceptionsTests;
 
-import nl.han.oose.dea.rest.services.exceptions.Playlist.UnauthorizedPlaylistAccessException;
+import nl.han.oose.dea.rest.services.exceptions.UnauthorizedPlaylistAccessException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

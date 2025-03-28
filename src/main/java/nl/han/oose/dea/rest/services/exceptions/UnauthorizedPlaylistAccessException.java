@@ -1,4 +1,4 @@
-package nl.han.oose.dea.rest.services.exceptions.Playlist;
+package nl.han.oose.dea.rest.services.exceptions;
 
 
 public class UnauthorizedPlaylistAccessException extends RuntimeException {

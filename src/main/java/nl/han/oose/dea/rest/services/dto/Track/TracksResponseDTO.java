@@ -1,4 +1,4 @@
-package nl.han.oose.dea.rest.services.dto.Track;
+package nl.han.oose.dea.rest.services.dto.track;
 
 import java.util.List;
 

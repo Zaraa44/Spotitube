@@ -1,6 +1,6 @@
 package nl.han.oose.dea.rest.resources.dtoTests;
 
-import nl.han.oose.dea.rest.services.dto.Playlist.PlaylistDTO;
+import nl.han.oose.dea.rest.services.dto.playlist.PlaylistDTO;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 

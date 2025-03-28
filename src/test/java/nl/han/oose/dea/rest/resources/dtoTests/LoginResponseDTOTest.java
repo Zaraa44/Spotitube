@@ -1,6 +1,6 @@
 package nl.han.oose.dea.rest.resources.dtoTests;
 
-import nl.han.oose.dea.rest.services.dto.Login.LoginResponseDTO;
+import nl.han.oose.dea.rest.services.dto.login.LoginResponseDTO;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

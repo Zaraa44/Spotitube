@@ -1,11 +1,11 @@
-package nl.han.oose.dea.rest.datasource.DAO;
+package nl.han.oose.dea.rest.datasource.dao;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import nl.han.oose.dea.rest.datasource.mappers.PlaylistDAOMapper;
-import nl.han.oose.dea.rest.datasource.mappers.UserDAOMapper;
-import nl.han.oose.dea.rest.services.dto.Playlist.PlaylistDTO;
+import nl.han.oose.dea.rest.datasource.util.DatabaseProperties;
+import nl.han.oose.dea.rest.services.dto.playlist.PlaylistDTO;
+import nl.han.oose.dea.rest.services.exceptions.PlaylistDataAccessException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,24 +15,30 @@ import java.util.List;
 public class PlaylistDAO {
 
     private PlaylistDAOMapper mapper;
+    private DatabaseProperties dbProps;
+
+    public PlaylistDAO() {
+    }
 
     @Inject
     public void setMapper(PlaylistDAOMapper mapper) {
         this.mapper = mapper;
     }
 
-    public PlaylistDAO() {
+    @Inject
+    public void setDatabaseProperties(DatabaseProperties dbProps) {
+        this.dbProps = dbProps;
     }
 
-    private final String dbUrl = "jdbc:sqlserver://localhost:1433;databaseName=Spotitube";
-    private final String dbUser = "nisa";
-    private final String dbPassword = "Naelbdp123!";
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(dbProps.connectionString());
+    }
 
     public List<PlaylistDTO> getAllPlaylists(String requestingUser) {
         List<PlaylistDTO> playlists = new ArrayList<>();
         String sql = "SELECT ID, NAME, USERNAME, OWNER FROM PLAYLIST";
 
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -41,7 +47,7 @@ public class PlaylistDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PlaylistDataAccessException("Fout bij ophalen van alle playlists.", e);
         }
 
         return playlists;
@@ -50,7 +56,7 @@ public class PlaylistDAO {
     public int calculateTotalLength() {
         String sql = "SELECT SUM(LENGTH) AS TOTAL FROM PLAYLIST";
 
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -59,8 +65,9 @@ public class PlaylistDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PlaylistDataAccessException("Fout bij uitrekenen.", e);
         }
+
 
         return 0;
     }
@@ -69,7 +76,7 @@ public class PlaylistDAO {
         String sql = "INSERT INTO PLAYLIST (ID, USERNAME, NAME, OWNER, LENGTH) VALUES (?, ?, ?, ?, 0)";
         int id = generateUniqueId();
 
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
@@ -79,14 +86,14 @@ public class PlaylistDAO {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PlaylistDataAccessException("Fout bij toevoegen van playlist.", e);
         }
     }
 
     private int generateUniqueId() {
         String sql = "SELECT MAX(ID) AS MAX_ID FROM PLAYLIST";
 
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+        try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -104,7 +111,7 @@ public class PlaylistDAO {
     public void updatePlaylistName(int id, String newName) {
         String sql = "UPDATE PLAYLIST SET NAME = ? WHERE ID = ?";
 
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, newName);
@@ -120,7 +127,7 @@ public class PlaylistDAO {
         String deleteTracksSql = "DELETE FROM PLAYLISTTRACKS WHERE ID = ?";
         String deletePlaylistSql = "DELETE FROM PLAYLIST WHERE ID = ?";
 
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword)) {
+        try (Connection conn = getConnection()) {
 
             try (PreparedStatement stmtTracks = conn.prepareStatement(deleteTracksSql)) {
                 stmtTracks.setInt(1, id);
@@ -133,9 +140,9 @@ public class PlaylistDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Fout bij verwijderen van playlist met tracks.");
+            throw new PlaylistDataAccessException("Fout bij verwijderen van playlist met tracks.", e);
         }
+
     }
 
     public boolean isOwnerOfPlaylist(String token, int playlistId) {
@@ -146,7 +153,7 @@ public class PlaylistDAO {
                 WHERE P.ID = ? AND U.TOKEN = ?
                 """;
 
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, playlistId);
@@ -165,7 +172,7 @@ public class PlaylistDAO {
         String resetAll = "UPDATE PLAYLIST SET OWNER = 0";
         String setOwner = "UPDATE PLAYLIST SET OWNER = 1 WHERE USERNAME = ?";
 
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword)) {
+        try (Connection conn = getConnection()) {
 
             try (PreparedStatement resetStmt = conn.prepareStatement(resetAll)) {
                 resetStmt.executeUpdate();
@@ -177,7 +184,9 @@ public class PlaylistDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PlaylistDataAccessException("Fout bij updaten.", e);
         }
     }
+
+
 }

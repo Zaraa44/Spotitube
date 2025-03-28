@@ -4,11 +4,11 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import nl.han.oose.dea.rest.datasource.DAO.TrackDAO;
-import nl.han.oose.dea.rest.datasource.DAO.UserDAO;
-import nl.han.oose.dea.rest.datasource.DAO.PlaylistDAO;
-import nl.han.oose.dea.rest.services.dto.Track.TracksResponseDTO;
-import nl.han.oose.dea.rest.services.dto.Track.TrackDTO;
+import nl.han.oose.dea.rest.datasource.dao.TrackDAO;
+import nl.han.oose.dea.rest.datasource.dao.UserDAO;
+import nl.han.oose.dea.rest.datasource.dao.PlaylistDAO;
+import nl.han.oose.dea.rest.services.dto.track.TracksResponseDTO;
+import nl.han.oose.dea.rest.services.dto.track.TrackDTO;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package nl.han.oose.dea.rest.resources.exceptionsTests;
 
 import jakarta.ws.rs.core.Response;
-import nl.han.oose.dea.rest.services.exceptions.Track.TrackNotFoundException;
-import nl.han.oose.dea.rest.services.exceptions.Track.TrackNotFoundExceptionMapper;
+import nl.han.oose.dea.rest.services.exceptions.TrackNotFoundException;
+import nl.han.oose.dea.rest.resources.exceptionMappers.TrackNotFoundExceptionMapper;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

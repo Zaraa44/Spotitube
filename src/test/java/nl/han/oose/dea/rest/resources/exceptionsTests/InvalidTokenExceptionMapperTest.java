@@ -1,8 +1,8 @@
 package nl.han.oose.dea.rest.resources.exceptionsTests;
 
 import jakarta.ws.rs.core.Response;
-import nl.han.oose.dea.rest.services.exceptions.Token.InvalidTokenException;
-import nl.han.oose.dea.rest.services.exceptions.Token.InvalidTokenExceptionMapper;
+import nl.han.oose.dea.rest.services.exceptions.InvalidTokenException;
+import nl.han.oose.dea.rest.resources.exceptionMappers.InvalidTokenExceptionMapper;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

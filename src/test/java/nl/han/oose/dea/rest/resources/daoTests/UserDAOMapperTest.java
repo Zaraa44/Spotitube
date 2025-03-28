@@ -1,7 +1,7 @@
 package nl.han.oose.dea.rest.resources.daoTests;
 
 import nl.han.oose.dea.rest.datasource.mappers.UserDAOMapper;
-import nl.han.oose.dea.rest.services.dto.User.UserDTO;
+import nl.han.oose.dea.rest.services.dto.user.UserDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

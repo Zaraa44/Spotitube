@@ -1,7 +1,7 @@
 package nl.han.oose.dea.rest.datasource.mappers;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import nl.han.oose.dea.rest.services.dto.User.UserDTO;
+import nl.han.oose.dea.rest.services.dto.user.UserDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

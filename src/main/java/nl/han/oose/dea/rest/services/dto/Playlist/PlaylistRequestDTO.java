@@ -1,4 +1,4 @@
-package nl.han.oose.dea.rest.services.dto.Playlist;
+package nl.han.oose.dea.rest.services.dto.playlist;
 
 public class PlaylistRequestDTO {
     private String name;

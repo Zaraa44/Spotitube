@@ -1,4 +1,4 @@
-package nl.han.oose.dea.rest.services.dto.Track;
+package nl.han.oose.dea.rest.services.dto.track;
 
 public class TrackDTO {
     private int id;

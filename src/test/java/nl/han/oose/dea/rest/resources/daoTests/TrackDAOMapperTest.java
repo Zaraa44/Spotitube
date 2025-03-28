@@ -1,7 +1,7 @@
 package nl.han.oose.dea.rest.resources.daoTests;
 
 import nl.han.oose.dea.rest.datasource.mappers.TrackDAOMapper;
-import nl.han.oose.dea.rest.services.dto.Track.TrackDTO;
+import nl.han.oose.dea.rest.services.dto.track.TrackDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,10 +1,10 @@
 package nl.han.oose.dea.rest.resources.resourceTests;
 
-import nl.han.oose.dea.rest.datasource.DAO.UserDAO;
-import nl.han.oose.dea.rest.datasource.DAO.PlaylistDAO;
+import nl.han.oose.dea.rest.datasource.dao.UserDAO;
+import nl.han.oose.dea.rest.datasource.dao.PlaylistDAO;
 import nl.han.oose.dea.rest.resources.LoginResource;
-import nl.han.oose.dea.rest.services.dto.Login.LoginRequestDTO;
-import nl.han.oose.dea.rest.services.dto.User.UserDTO;
+import nl.han.oose.dea.rest.services.dto.login.LoginRequestDTO;
+import nl.han.oose.dea.rest.services.dto.user.UserDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mindrot.jbcrypt.BCrypt;

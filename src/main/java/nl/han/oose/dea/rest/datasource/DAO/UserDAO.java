@@ -1,20 +1,19 @@
-package nl.han.oose.dea.rest.datasource.DAO;
+package nl.han.oose.dea.rest.datasource.dao;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import nl.han.oose.dea.rest.datasource.mappers.UserDAOMapper;
-import nl.han.oose.dea.rest.services.dto.User.UserDTO;
+import nl.han.oose.dea.rest.datasource.util.DatabaseProperties;
+import nl.han.oose.dea.rest.services.dto.user.UserDTO;
+import nl.han.oose.dea.rest.services.exceptions.UserDataAccessException;
 
 import java.sql.*;
 
 @ApplicationScoped
 public class UserDAO {
 
-    private final String dbUrl = "jdbc:sqlserver://localhost:1433;databaseName=Spotitube";
-    private final String dbUser = "nisa";
-    private final String dbPassword = "Naelbdp123!";
-
     private UserDAOMapper mapper;
+    private DatabaseProperties dbProps;
 
     public UserDAO() {
     }
@@ -24,10 +23,19 @@ public class UserDAO {
         this.mapper = mapper;
     }
 
+    @Inject
+    public void setDatabaseProperties(DatabaseProperties dbProps) {
+        this.dbProps = dbProps;
+    }
+
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(dbProps.connectionString());
+    }
+
     public UserDTO getUserByUsername(String username) {
         String sql = "SELECT USERNAME, PASSWORD FROM USERS WHERE USERNAME = ?";
 
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, username);
@@ -37,7 +45,7 @@ public class UserDAO {
                 return mapper.mapToUserDTO(rs);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new UserDataAccessException("Fout bij ophalen van gebruiker op basis van username.", e);
         }
         return null;
     }
@@ -45,7 +53,7 @@ public class UserDAO {
     public String getUsernameByToken(String token) {
         String sql = "SELECT USERNAME FROM USERS WHERE TOKEN = ?";
 
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, token);
@@ -55,7 +63,7 @@ public class UserDAO {
                 return rs.getString("USERNAME");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new UserDataAccessException("Fout bij ophalen van username via token.", e);
         }
         return null;
     }
@@ -63,7 +71,7 @@ public class UserDAO {
     public void updateUserToken(String username, String token) {
         String sql = "UPDATE USERS SET TOKEN = ? WHERE USERNAME = ?";
 
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, token);
@@ -71,7 +79,7 @@ public class UserDAO {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new UserDataAccessException("Fout bij updaten van token voor gebruiker.", e);
         }
     }
 

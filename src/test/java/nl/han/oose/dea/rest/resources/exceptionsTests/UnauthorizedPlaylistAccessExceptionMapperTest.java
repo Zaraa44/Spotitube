@@ -1,8 +1,8 @@
 package nl.han.oose.dea.rest.resources.exceptionsTests;
 
 import jakarta.ws.rs.core.Response;
-import nl.han.oose.dea.rest.services.exceptions.Playlist.UnauthorizedPlaylistAccessException;
-import nl.han.oose.dea.rest.services.exceptions.Playlist.UnauthorizedPlaylistAccessExceptionMapper;
+import nl.han.oose.dea.rest.services.exceptions.UnauthorizedPlaylistAccessException;
+import nl.han.oose.dea.rest.resources.exceptionMappers.UnauthorizedPlaylistAccessExceptionMapper;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

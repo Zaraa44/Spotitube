@@ -1,7 +1,7 @@
 package nl.han.oose.dea.rest.resources.daoTests;
 
 import nl.han.oose.dea.rest.datasource.mappers.PlaylistDAOMapper;
-import nl.han.oose.dea.rest.services.dto.Playlist.PlaylistDTO;
+import nl.han.oose.dea.rest.services.dto.playlist.PlaylistDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

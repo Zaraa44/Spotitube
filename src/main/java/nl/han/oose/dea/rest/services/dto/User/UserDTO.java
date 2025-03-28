@@ -1,4 +1,4 @@
-package nl.han.oose.dea.rest.services.dto.User;
+package nl.han.oose.dea.rest.services.dto.user;
 
 public class UserDTO {
     private String username;

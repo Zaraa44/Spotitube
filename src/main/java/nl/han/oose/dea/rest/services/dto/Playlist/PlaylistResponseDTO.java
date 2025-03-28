@@ -1,4 +1,4 @@
-package nl.han.oose.dea.rest.services.dto.Playlist;
+package nl.han.oose.dea.rest.services.dto.playlist;
 
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package nl.han.oose.dea.rest;
+package nl.han.oose.dea.rest.resources;
 
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;
